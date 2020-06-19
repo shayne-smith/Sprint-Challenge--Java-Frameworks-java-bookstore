@@ -27,7 +27,7 @@ public class Author extends Auditable
         cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "author",
         allowSetters = true)
-    private List<AuthorBooks> books = new ArrayList<>();
+    private List<Wrote> wrotes = new ArrayList<>();
 
     public Author()
     {
@@ -35,12 +35,20 @@ public class Author extends Auditable
 
     public Author(
         @NotNull String lastname,
-        @NotNull String firstname,
-        List<AuthorBooks> books)
+        @NotNull String firstname)
     {
         this.lastname = lastname;
         this.firstname = firstname;
-        this.books = books;
+    }
+
+    public Author(
+        @NotNull String lastname,
+        @NotNull String firstname,
+        List<Wrote> wrotes)
+    {
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.wrotes = wrotes;
     }
 
     public long getAuthorid()
@@ -73,13 +81,19 @@ public class Author extends Auditable
         this.firstname = firstname;
     }
 
-    public List<AuthorBooks> getBooks()
+    public List<Wrote> getWrotes()
     {
-        return books;
+        return wrotes;
     }
 
-    public void setBooks(List<AuthorBooks> books)
+    public void setBooks(List<Wrote> wrotes)
     {
-        this.books = books;
+        this.wrotes = wrotes;
+    }
+
+    public void addBook(Book book)
+    {
+        wrotes.add(new Wrote(this,
+            book));
     }
 }

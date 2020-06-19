@@ -26,11 +26,16 @@ public class Book extends Auditable
     @Column(nullable = true)
     private int copy;
 
+    @ManyToOne()
+    @JoinColumn(name = "sectionid", nullable = false)
+    @JsonIgnoreProperties(value = "books")
+    private Section section;
+
     @OneToMany(mappedBy = "book",
         cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "book",
         allowSetters = true)
-    private List<AuthorBooks> authors = new ArrayList<>();
+    private List<Wrote> wrotes = new ArrayList<>();
 
     public Book()
     {
@@ -40,12 +45,26 @@ public class Book extends Auditable
         @NotNull String booktitle,
         @NotNull String ISBN,
         int copy,
-        List<AuthorBooks> authors)
+        Section section)
     {
         this.booktitle = booktitle;
         this.ISBN = ISBN;
         this.copy = copy;
-        this.authors = authors;
+        this.section = section;
+    }
+
+    public Book(
+        @NotNull String booktitle,
+        @NotNull String ISBN,
+        int copy,
+        Section section,
+        List<Wrote> wrotes)
+    {
+        this.booktitle = booktitle;
+        this.ISBN = ISBN;
+        this.copy = copy;
+        this.section = section;
+        this.wrotes = wrotes;
     }
 
     public long getBookid()
@@ -88,13 +107,23 @@ public class Book extends Auditable
         this.copy = copy;
     }
 
-    public List<AuthorBooks> getAuthors()
+    public List<Wrote> getWrotes()
     {
-        return authors;
+        return wrotes;
     }
 
-    public void setAuthors(List<AuthorBooks> authors)
+    public void setWrotes(List<Wrote> wrotes)
     {
-        this.authors = authors;
+        this.wrotes = wrotes;
+    }
+
+    public Section getSection()
+    {
+        return section;
+    }
+
+    public void setSection(Section section)
+    {
+        this.section = section;
     }
 }

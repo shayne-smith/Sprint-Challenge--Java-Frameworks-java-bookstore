@@ -25,20 +25,25 @@ public class Section extends Auditable
     @OneToMany(mappedBy = "section",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
-    @JsonIgnoreProperties(value = "section",
+    @JsonIgnoreProperties(value = "sections",
         allowSetters = true)
-    private List<Book> sectionBooks = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     public Section()
     {
     }
 
-    public Section(
-        @NotNull String sectionname,
-        List<Book> sectionBooks)
+    public Section(@NotNull String sectionname)
     {
         this.sectionname = sectionname;
-        this.sectionBooks = sectionBooks;
+    }
+
+    public Section(
+        @NotNull String sectionname,
+        List<Book> books)
+    {
+        this.sectionname = sectionname;
+        this.books = books;
     }
 
     public long getSectionid()
@@ -61,13 +66,13 @@ public class Section extends Auditable
         this.sectionname = sectionname;
     }
 
-    public List<Book> getSectionBooks()
+    public List<Book> getBooks()
     {
-        return sectionBooks;
+        return books;
     }
 
-    public void setSectionBooks(List<Book> sectionBooks)
+    public void setBooks(List<Book> books)
     {
-        this.sectionBooks = sectionBooks;
+        this.books = books;
     }
 }
